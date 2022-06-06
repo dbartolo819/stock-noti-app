@@ -1,0 +1,11 @@
+.MuiButtonBase-root.MuiIconButton-root:hover {
+  color: #ea4858;
+}
+
+.activeStock__priceText {
+  color: #5cb85c;
+}
+
+.activeStock__percentageText {
+  color: #764abc;
+}

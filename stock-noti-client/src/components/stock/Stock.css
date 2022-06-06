@@ -1,3 +1,4 @@
-.stock {
-  background-color: yellow;
+.MuiDivider-root.MuiDivider-middle.stock__divider{
+  margin-top: 35px;
+  margin-bottom: 25px;
 }

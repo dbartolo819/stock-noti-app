@@ -1,0 +1,19 @@
+.stockform__form {
+  display: flex;
+  justify-content: space-between;
+  width: 650px;
+  align-items: center;
+}
+
+.MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
+  border-radius: 20px;
+  background-color: white;
+}
+
+/* .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.Mui-focused.MuiInputBase-formControl {
+  border-radius: 20px;
+} */
+
+.Mui-selected:focus {
+  outline: none;
+}

@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 48px;
+  background-color: #C1C8E4;
+}
+
+.layout__header {
+  font-size: 50px;
+  font-weight: 700;
+  color: #538dd4;
+  margin-bottom: 24px;
+}
