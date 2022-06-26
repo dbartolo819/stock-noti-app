@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../../store/actions/auth";
+import { registerUser } from "../../store/actions/auth";
 
 import { useSnackbar } from "notistack";
 
-import "./Login.css";
+import "./Register.css";
 
-const Login = () => {
+const Register = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const errors = useSelector((state) => state.auth.errors);
   const dispatch = useDispatch();
@@ -24,9 +24,9 @@ const Login = () => {
     });
   };
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    dispatch(registerUser(formData));
   };
 
   const handleVariant = useCallback(
@@ -45,8 +45,8 @@ const Login = () => {
   if (isAuthenticated) return <Navigate to="/dashboard" replace={true} />;
 
   return (
-    <div className="auth">
-      <form className="auth__form" onSubmit={handleLogin}>
+    <div className="register">
+      <form className="register__form" onSubmit={handleRegister}>
         <label htmlFor="labelEmail1">Email:</label>
         <input
           type="text"
@@ -61,14 +61,14 @@ const Login = () => {
           name="password"
           onChange={handleOnChange}
         />
-        <input type="submit" value="Login" />
+        <input type="submit" value="Register" />
 
         <p className="auth__signup">
-          <Link to="/register">Sign Up</Link>
+          <Link to="/login">Sign In</Link>
         </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

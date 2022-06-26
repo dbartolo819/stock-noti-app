@@ -5,13 +5,24 @@ import App from "./App";
 import store from "./store/index";
 import { Provider } from "react-redux";
 import "./index.css";
+import { SnackbarProvider } from "notistack";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <SnackbarProvider
+        className="index__snackbar"
+        autoHideDuration={4000}
+        maxSnack={5}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <App />
+      </SnackbarProvider>
     </BrowserRouter>
   </Provider>
 );

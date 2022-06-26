@@ -1,44 +1,26 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import Login from "./components/auth/Login";
-import Sidebar from "./components/sidebar/Sidebar";
+import Register from "./components/auth/Register";
 import Stock from "./components/stock/Stock";
 import Settings from "./components/sidebar/Settings";
-import Layout from "./components/layouts/Layout";
+import ProtectedRoute from "./components/layouts/ProtectedRoute";
 
 import "./App.css";
 
-function App() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  const stockLayout = (
-    <Layout title="Dashboard">
-      <Stock />
-    </Layout>
-  );
-
-  const settingsLayout = (
-    <Layout title="Settings">
-      <Settings />
-    </Layout>
-  );
-
+function App() {  
   return (
     <div className="app">
-      {!isAuthenticated ? (
-        <Login />
-      ) : (
-        <div className="app__body">
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={stockLayout} />
-            <Route path="dashboard" element={stockLayout} />
-            <Route path="settings" element={settingsLayout} />
-          </Routes>
-        </div>
-      )}
+        <Routes>
+          <Route path="/" element={<Login/>} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="dashboard" element={<Stock />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Routes>
     </div>
   );
 }
