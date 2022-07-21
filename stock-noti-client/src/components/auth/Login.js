@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/auth";
 
 import { useSnackbar } from "notistack";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import PersonIcon from "@mui/icons-material/Person";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
 import "./Login.css";
 
@@ -12,13 +16,13 @@ const Login = () => {
   const errors = useSelector((state) => state.auth.errors);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const handleOnChange = (e) => {
+    console.log(e.target.name);
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
@@ -47,28 +51,42 @@ const Login = () => {
   return (
     <div className="auth">
       <form className="auth__form" onSubmit={handleLogin}>
-        <label htmlFor="labelEmail1">Email:</label>
-        <input
-          type="text"
-          id="inputEmail1"
-          name="email"
-          onChange={handleOnChange}
-        />
-        <label htmlFor="labelPassword1">Password:</label>
-        <input
-          type="password"
-          id="inputPassword1"
-          name="password"
-          onChange={handleOnChange}
-        />
-        <input type="submit" value="Login" />
-
-        <p className="auth__signup">
-          <Link to="/register">Sign Up</Link>
-        </p>
+        <h1>Stock Noti</h1>
+        <div className="auth__formInputs">
+          <PersonIcon className="auth__formIcon" />
+          <TextField
+            className="auth__emailInput"
+            id="inputEmail1"
+            variant="outlined"
+            name="email"
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="auth__formInputs">
+          <VpnKeyIcon className="auth__formIcon" />
+          <TextField
+            className="auth__passwordInput"
+            id="inputPassword1"
+            variant="outlined"
+            name="password"
+            type="password"
+            size="small"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="auth__formBtns">
+          <Button className="auth__loginBtn" type="submit" variant="contained">
+            Login
+          </Button>
+          <Link to="/register" className="auth__signup">
+            Sign Up
+          </Link>
+        </div>
       </form>
     </div>
   );
 };
 
 export default Login;
+//Improvement: could reuse login and register structure

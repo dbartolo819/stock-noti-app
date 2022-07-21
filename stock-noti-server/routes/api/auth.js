@@ -19,12 +19,10 @@ router.post(
   "/register",
   check("email").isEmail().withMessage("Please provide a valid email"),
   check("password").custom((password) => {
-    console.log("here password");
-    console.log(passwordSchema.validate(password));
     if (passwordSchema.validate(password)) {
       return true;
-    } else {
-      console.log(passwordSchema.validate(password, { details: true }));
+    } 
+    else {
       return Promise.reject(
         passwordSchema.validate(password, { details: true })
       );
@@ -39,7 +37,8 @@ router.post(
   check("password").custom((password) => {
     if (passwordSchema.validate(password)) {
       return true;
-    } else {
+    } 
+    else {
       return Promise.reject(
         passwordSchema.validate(password, { details: true })
       );

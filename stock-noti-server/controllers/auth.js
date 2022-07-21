@@ -7,7 +7,6 @@ dotenv.config();
 const User = require("../models/User");
 
 const registerUser = async (req, res) => {
-  console.log(req.body);
 
   const errors = validationResult(req);
 
@@ -20,9 +19,6 @@ const registerUser = async (req, res) => {
   try {
     let user = await User.findOne({ email: email });
 
-    console.log("this is the user");
-    console.log(user);
-
     if (user) {
       return res.status(400).json({
         errors: {
@@ -31,9 +27,6 @@ const registerUser = async (req, res) => {
       });
     }
 
-    console.log("user that will be new");
-    console.log(user);
-
     user = new User({
       email,
       password,
@@ -41,8 +34,6 @@ const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    console.log("the hashed password is: ");
-    console.log(user.password);
     user.save();
 
     const payload = {
@@ -58,7 +49,6 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  console.log(req.body);
 
   const errors = validationResult(req);
 
@@ -70,9 +60,6 @@ const loginUser = async (req, res) => {
 
   try {
     let user = await User.findOne({ email: email });
-
-    console.log("this is the user for logging in");
-    console.log(user);
 
     if (!user) {
       return res.status(400).json({
@@ -109,7 +96,7 @@ const loadUser = async (req, res) => {
     const user = await User.findById(req.user).select("-password");
     res.json(user);
   } catch (error) {
-    console.log("load User error");
+    console.log("loadUser error");
     console.log(error);
     res.status(500).json(error);
   }

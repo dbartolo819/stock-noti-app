@@ -4,10 +4,6 @@ import setAuthToken from "../../utils/setAuthToken";
 
 export const registerUser = (creds) => {
   return async (dispatch) => {
-    const { email, password } = creds;
-    console.log(email);
-    console.log(password);
-
     try {
       const res = await StockNotiClient.post(
         `${process.env.REACT_APP_API_URL}/api/auth/register`,
@@ -15,18 +11,16 @@ export const registerUser = (creds) => {
       );
       localStorage.setItem("jwtToken", res.data.accessToken);
       dispatch(loadUser());
-      console.log("we are registered");
     } catch (error) {
       const errors = error.response.data.errors;
-      console.log("register errors are");
-      console.log(error);
       dispatch(authError({ clearErrors: true }));
       if (errors) {
         if (Array.isArray(errors)) {
           errors.forEach((err) => {
             if (err.param === "email") {
               dispatch(authError({ errMsg: err.msg }));
-            } else {
+            } 
+            else {
               err.msg.forEach((passwordErr) => {
                 dispatch(
                   authError({
@@ -39,7 +33,13 @@ export const registerUser = (creds) => {
               });
             }
           });
-        } else {
+        } 
+        else {
+          dispatch(
+            authError({
+              errMsg: errors.msg,
+            })
+          );
         }
       }
       dispatch(loginFail);
@@ -49,10 +49,6 @@ export const registerUser = (creds) => {
 
 export const loginUser = (creds) => {
   return async (dispatch) => {
-    const { email, password } = creds;
-    console.log(email);
-    console.log(password);
-
     try {
       const res = await StockNotiClient.post(
         `${process.env.REACT_APP_API_URL}/api/auth`,
@@ -60,27 +56,36 @@ export const loginUser = (creds) => {
       );
       localStorage.setItem("jwtToken", res.data.accessToken);
       dispatch(loadUser());
-
-      console.log("we reached here");
     } catch (error) {
       const errors = error.response.data.errors;
-      console.log("log in errors are");
-      console.log(errors);
       dispatch(authError({ clearErrors: true }));
       if (errors) {
-        errors.forEach((err) => {
-          if (err.param === "email") {
-            dispatch(authError({ errMsg: err.msg }));
-          } else {
-            err.msg.forEach((passwordErr) => {
-              dispatch(
-                authError({
-                  errMsg: passwordErr.message.replace("The string", "Password"),
-                })
-              );
-            });
-          }
-        });
+        if (Array.isArray(errors)) {
+          errors.forEach((err) => {
+            if (err.param === "email") {
+              dispatch(authError({ errMsg: err.msg }));
+            } 
+            else if (err.param === "password") {
+              err.msg.forEach((passwordErr) => {
+                dispatch(
+                  authError({
+                    errMsg: passwordErr.message.replace(
+                      "The string",
+                      "Password"
+                    ),
+                  })
+                );
+              });
+            }
+          });
+        } 
+        else {
+          dispatch(
+            authError({
+              errMsg: errors.msg,
+            })
+          );
+        }
       }
       dispatch(loginFail);
     }
@@ -97,10 +102,10 @@ export const loadUser = () => {
       const res = await StockNotiClient.get(
         `${process.env.REACT_APP_API_URL}/api/auth`
       );
+       console.log(res)
       dispatch(login());
     } catch (error) {
-      console.log("the loaduser error is: ");
-      console.log(error)
+      console.log(error);
     }
   };
 };
