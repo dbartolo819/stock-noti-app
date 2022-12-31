@@ -2,35 +2,57 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   stockSymbol: "",
-  percentage: "", //or 0
-  duration: "",
+  targetPrice: "",
   activeStocks: [],
-  inactiveStocks: [],
+  errors: [],
+  // inactiveStocks: [],
 };
 
 const stockSlice = createSlice({
   name: "stocks",
   initialState,
   reducers: {
+    getUserStocks: (state, action) => {
+      const { payload } = action;
+      state.activeStocks = payload;
+    },
     handleStockSymbol: (state, action) => {
-      state.stockSymbol = action.payload;
+      const { payload } = action;
+      state.stockSymbol = payload;
     },
-    handlePercentage: (state, action) => {
-      state.percentage = action.payload;
+    handleTargetPrice: (state, action) => {
+      const { payload } = action;
+      state.targetPrice = payload;
     },
-    handleDuration: (state, action) => {
-      state.duration = action.payload;
+    clearForm: (state) => {
+      state.stockSymbol = "";
+      state.targetPrice = "";
     },
-    
+    addStock: (state, action) => {
+      const { payload } = action;
+      state.activeStocks.push(payload);
+    },
+    stockError: (state, action) => {
+      const { payload } = action;
+      state.errors = [];
+      payload.errors.forEach((element) => {
+        state.errors.push(element.msg);
+      });
+    },
+    clearStockErrors: (state) => {
+      state.errors = [];
+    },
   },
 });
 
 export const {
+  getUserStocks,
   handleStockSymbol,
-  handlePercentage,
-  handleDuration,
-  stockAdded,
-  stockRemoved,
+  handleTargetPrice,
+  clearForm,
+  addStock,
+  stockError,
+  clearStockErrors,
 } = stockSlice.actions;
 
 export default stockSlice.reducer;

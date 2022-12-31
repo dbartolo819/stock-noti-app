@@ -23,8 +23,6 @@ const authSlice = createSlice({
     },
     authError: (state, action) => {
       const { payload } = action;
-      console.log("this is payload");
-      console.log(payload);
       if (payload.clearErrors) {
         state.errors = []
       }

@@ -1,4 +1,24 @@
-.MuiButtonBase-root.MuiIconButton-root:hover {
+.activeStock__cardHeader {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activeStock__cardText {
+  width: 110px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.activeStock__cardExitBtn {
+  cursor: pointer;
+  color: #cd5c5c;
+}
+
+.activeStock__cardExitBtn:hover {
+  cursor: pointer;
   color: #ea4858;
 }
 

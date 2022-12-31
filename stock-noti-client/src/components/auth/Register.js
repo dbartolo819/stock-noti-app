@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../store/actions/auth";
-
 import { useSnackbar } from "notistack";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";

@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/auth";
-
 import { useSnackbar } from "notistack";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
@@ -22,7 +22,6 @@ const Login = () => {
   });
 
   const handleOnChange = (e) => {
-    console.log(e.target.name);
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });

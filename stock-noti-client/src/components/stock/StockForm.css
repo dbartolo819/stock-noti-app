@@ -1,13 +1,17 @@
 .stockform__form {
   display: flex;
-  justify-content: space-between;
-  width: 650px;
+  width: 400px;
   align-items: center;
+}
+
+.stockform__formField {
+  padding: 500px;
 }
 
 .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
   border-radius: 20px;
   background-color: white;
+  margin-right: 12px;
 }
 
 /* .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.Mui-focused.MuiInputBase-formControl {

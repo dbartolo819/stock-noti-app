@@ -5,22 +5,19 @@ import setAuthToken from "../../utils/setAuthToken";
 export const registerUser = (creds) => {
   return async (dispatch) => {
     try {
-      const res = await StockNotiClient.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/register`,
-        creds
-      );
+      const res = await StockNotiClient.post("/api/auth/register", creds);
       localStorage.setItem("jwtToken", res.data.accessToken);
       dispatch(loadUser());
     } catch (error) {
       const errors = error.response.data.errors;
       dispatch(authError({ clearErrors: true }));
       if (errors) {
+        //if express-validator returned an error
         if (Array.isArray(errors)) {
           errors.forEach((err) => {
             if (err.param === "email") {
               dispatch(authError({ errMsg: err.msg }));
-            } 
-            else {
+            } else {
               err.msg.forEach((passwordErr) => {
                 dispatch(
                   authError({
@@ -33,8 +30,7 @@ export const registerUser = (creds) => {
               });
             }
           });
-        } 
-        else {
+        } else { //if manual error returned
           dispatch(
             authError({
               errMsg: errors.msg,
@@ -42,7 +38,7 @@ export const registerUser = (creds) => {
           );
         }
       }
-      dispatch(loginFail);
+      dispatch(loginFail());
     }
   };
 };
@@ -50,10 +46,7 @@ export const registerUser = (creds) => {
 export const loginUser = (creds) => {
   return async (dispatch) => {
     try {
-      const res = await StockNotiClient.post(
-        `${process.env.REACT_APP_API_URL}/api/auth`,
-        creds
-      );
+      const res = await StockNotiClient.post("/api/auth", creds);
       localStorage.setItem("jwtToken", res.data.accessToken);
       dispatch(loadUser());
     } catch (error) {
@@ -64,8 +57,7 @@ export const loginUser = (creds) => {
           errors.forEach((err) => {
             if (err.param === "email") {
               dispatch(authError({ errMsg: err.msg }));
-            } 
-            else if (err.param === "password") {
+            } else if (err.param === "password") {
               err.msg.forEach((passwordErr) => {
                 dispatch(
                   authError({
@@ -78,8 +70,7 @@ export const loginUser = (creds) => {
               });
             }
           });
-        } 
-        else {
+        } else {
           dispatch(
             authError({
               errMsg: errors.msg,
@@ -87,7 +78,7 @@ export const loginUser = (creds) => {
           );
         }
       }
-      dispatch(loginFail);
+      dispatch(loginFail());
     }
   };
 };
@@ -99,13 +90,10 @@ export const loadUser = () => {
     }
 
     try {
-      const res = await StockNotiClient.get(
-        `${process.env.REACT_APP_API_URL}/api/auth`
-      );
-       console.log(res)
+      const res = await StockNotiClient.get("/api/auth");
       dispatch(login());
     } catch (error) {
-      console.log(error);
+      console.log("log in error", error);
     }
   };
 };

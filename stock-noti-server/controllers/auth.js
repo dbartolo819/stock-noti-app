@@ -7,7 +7,6 @@ dotenv.config();
 const User = require("../models/User");
 
 const registerUser = async (req, res) => {
-
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -27,6 +26,7 @@ const registerUser = async (req, res) => {
       });
     }
 
+    //When you create a new document with the automatically added _id property, Mongoose creates a new _id of type ObjectId to your document.
     user = new User({
       email,
       password,
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    user.save();
+    await user.save();
 
     const payload = {
       user: user.id,
@@ -49,7 +49,6 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

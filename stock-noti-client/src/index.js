@@ -14,7 +14,7 @@ root.render(
     <BrowserRouter>
       <SnackbarProvider
         className="index__snackbar"
-        autoHideDuration={4000}
+        autoHideDuration={1750}
         maxSnack={5}
         anchorOrigin={{
           vertical: "top",
