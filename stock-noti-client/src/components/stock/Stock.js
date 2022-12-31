@@ -11,11 +11,11 @@ import "./Stock.css";
 
 const Stock = () => {
   const dispatch = useDispatch();
-  //need a get to our database that has all the active stocks and set the state here for active stocks and inactive stocks
+
   useEffect(() => {
     dispatch(getAllStocksByUser());
   }, [dispatch]);
-  console.log("stock.js");
+
   return (
     <div className="stock">
       <StockForm />
