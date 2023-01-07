@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteStock } from "../../store/actions/stock";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,6 +11,7 @@ import "./ActiveStock.css";
 
 const ActiveStock = (props) => {
   const [raise, setRaise] = useState(false);
+  const dispatch = useDispatch();
 
   const handleMouseEvent = (e) => {
     setRaise((prevState) => !prevState);
@@ -23,7 +26,13 @@ const ActiveStock = (props) => {
     >
       <div className="activeStock__cardHeader">
         <h2>{props.stockSymbol}</h2>
-        <CancelIcon className="activeStock__cardExitBtn" />
+        <CancelIcon
+          className="activeStock__cardExitBtn"
+          onClick={() => {
+            console.log(props.id)
+            dispatch(deleteStock(props.id));
+          }}
+        />
       </div>
       <CardContent>
         <Typography
@@ -35,7 +44,7 @@ const ActiveStock = (props) => {
           Current Price: {props.currPrice}
         </Typography>
         <Typography className="activeStock__percentageText" variant="subtitle1">
-          Target Price: {props.targetPrice}%
+          Target Price: {props.targetPrice}
         </Typography>
       </CardContent>
     </Card>

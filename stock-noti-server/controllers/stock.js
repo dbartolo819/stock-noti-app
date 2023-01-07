@@ -7,13 +7,12 @@ const getAllStocksByUser = async (req, res) => {
     let stocks = await Stock.find({ user: req.user }).exec();
     res.json(stocks);
   } catch (error) {
-    console.log("getAllStocksByUser (api) error");
-    console.log(error);
+    console.log("getAllStocksByUser (api) error", error);
     res.status(500).json({ msg: "Server Error" });
   }
 };
 
-//Improvement? Call stock api from addStock function
+//Improvement? Call stock api from store/actions/stock sendStock function
 const sendStock = async (req, res) => {
   const errors = validationResult(req);
 
@@ -33,13 +32,23 @@ const sendStock = async (req, res) => {
     let stock = await newStock.save();
     res.json(stock);
   } catch (error) {
-    console.log("addStock (api) errssor");
-    console.log(error);
+    console.log("sendStock (api) error", error);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
+  }
+};
+
+const deleteStock = async (req, res) => {
+  try {
+    let stock = await Stock.findByIdAndDelete(req.params.postId);
+    res.json(stock)
+  } catch (error) {
+    console.log("deleteStock (api) error", error);
+    res.status(500).json({ msg: "Server Error" });
   }
 };
 
 module.exports = {
   getAllStocksByUser,
   sendStock,
+  deleteStock,
 };

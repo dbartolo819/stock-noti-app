@@ -4,7 +4,6 @@ import { getAllStocksByUser } from "../../store/actions/stock";
 
 import StockForm from "./StockForm";
 import ActiveStocks from "./ActiveStocks";
-import InactiveStocks from "./InactiveStocks";
 import Divider from "@mui/material/Divider";
 
 import "./Stock.css";
@@ -21,7 +20,6 @@ const Stock = () => {
       <StockForm />
       <Divider className="stock__divider" variant="middle" />
       <ActiveStocks />
-      <InactiveStocks />
     </div>
   );
 };

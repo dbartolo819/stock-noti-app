@@ -12,10 +12,6 @@ const stockSlice = createSlice({
   name: "stocks",
   initialState,
   reducers: {
-    getUserStocks: (state, action) => {
-      const { payload } = action;
-      state.activeStocks = payload;
-    },
     handleStockSymbol: (state, action) => {
       const { payload } = action;
       state.stockSymbol = payload;
@@ -28,9 +24,22 @@ const stockSlice = createSlice({
       state.stockSymbol = "";
       state.targetPrice = "";
     },
+    getUserStocks: (state, action) => {
+      const { payload } = action;
+      state.activeStocks = payload;
+    },
     addStock: (state, action) => {
       const { payload } = action;
       state.activeStocks.push(payload);
+    },
+    removeStock: (state, action) => {
+      const { payload } = action;
+      console.log("id is", payload)
+      console.log("active", state.activeStocks)
+      state.activeStocks = state.activeStocks.filter((stock) => {
+        console.log("here", stock);
+        return stock._id !== payload;
+      });
     },
     stockError: (state, action) => {
       const { payload } = action;
@@ -46,11 +55,12 @@ const stockSlice = createSlice({
 });
 
 export const {
-  getUserStocks,
   handleStockSymbol,
   handleTargetPrice,
   clearForm,
+  getUserStocks,
   addStock,
+  removeStock,
   stockError,
   clearStockErrors,
 } = stockSlice.actions;

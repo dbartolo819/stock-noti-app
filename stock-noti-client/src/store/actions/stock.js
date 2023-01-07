@@ -1,4 +1,9 @@
-import { getUserStocks, addStock, stockError } from "../reducers/stock";
+import {
+  getUserStocks,
+  addStock,
+  removeStock,
+  stockError,
+} from "../reducers/stock";
 import StockApiClient from "../../utils/stockApi";
 import StockNotiClient from "../../utils/api";
 
@@ -32,7 +37,6 @@ export const sendStock = (stockSymbol, targetPrice) => {
       const { c: currPrice } = stockRes.data;
       const stockReq = { currPrice, stockSymbol, targetPrice };
       const res = await StockNotiClient.post("/api/stock/send", stockReq);
-      console.log("res", res.data);
       dispatch(addStock(res.data));
     } catch (error) {
       console.log("sendStock", error);
@@ -40,6 +44,19 @@ export const sendStock = (stockSymbol, targetPrice) => {
         ? error.response.data.errors
         : [{ msg: error.message }];
 
+      dispatch(stockError({ errors }));
+    }
+  };
+};
+
+export const deleteStock = (postId) => {
+  return async (dispatch) => {
+    try {
+      await StockNotiClient.delete(`/api/stock/delete/${postId}`);
+      dispatch(removeStock(postId));
+    } catch (error) {
+      console.log("deleteStock", error);
+      const errors = [{ msg: error.response.data.msg }];
       dispatch(stockError({ errors }));
     }
   };

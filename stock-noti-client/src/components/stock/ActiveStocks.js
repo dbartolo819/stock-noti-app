@@ -9,7 +9,7 @@ import "./ActiveStocks.css";
 
 const ActiveStocks = (props) => {
   const activeStocks = useSelector((state) => state.stock.activeStocks);
-  
+
   //xs = 0px, sm = 600px , m = 900, lg = 1200px, xl = 1536px
   let gridExpandingProp;
   let minWidth;
@@ -31,6 +31,12 @@ const ActiveStocks = (props) => {
       minWidth = false;
   }
 
+  if (activeStocks.length === 0) {
+    return (
+      <div>No Stocked Added Yet!</div>
+    )
+  }
+
   return (
     <div className="activeStocks">
       <div className="activeStocks__title">Active Stocks</div>
@@ -44,6 +50,7 @@ const ActiveStocks = (props) => {
             {activeStocks.map((item) => (
               <Grid key={item._id} item {...gridExpandingProp}>
                 <ActiveStock
+                  id={item._id}
                   currPrice={item.currPrice}
                   stockSymbol={item.stockSymbol}
                   targetPrice={item.targetPrice}
