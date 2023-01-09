@@ -1,7 +1,12 @@
 const express = require("express");
 const { check } = require("express-validator");
 
-const { getAllStocksByUser, sendStock, deleteStock } = require("../../controllers/stock");
+const {
+  getAllStocksByUser,
+  sendStock,
+  sendStockAlert,
+  deleteStock,
+} = require("../../controllers/stock");
 const auth = require("../../middleware/auth");
 const router = express.Router();
 
@@ -16,6 +21,8 @@ router.post(
   ],
   sendStock
 );
+
+router.post("/sendAlert", auth, sendStockAlert);
 
 router.delete("/delete/:postId", auth, deleteStock);
 

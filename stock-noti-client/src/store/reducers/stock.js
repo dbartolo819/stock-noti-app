@@ -34,10 +34,7 @@ const stockSlice = createSlice({
     },
     removeStock: (state, action) => {
       const { payload } = action;
-      console.log("id is", payload)
-      console.log("active", state.activeStocks)
       state.activeStocks = state.activeStocks.filter((stock) => {
-        console.log("here", stock);
         return stock._id !== payload;
       });
     },

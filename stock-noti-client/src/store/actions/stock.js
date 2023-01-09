@@ -49,6 +49,19 @@ export const sendStock = (stockSymbol, targetPrice) => {
   };
 };
 
+export const sendStockAlert = (emailText, postId) => {
+  return async (dispatch) => {
+    try {
+      await StockNotiClient.post("/api/stock/sendAlert", emailText);
+      dispatch(deleteStock(postId));
+    } catch (error) {
+      console.log("sendStockAlert", error);
+      const errors = [{ msg: error.response.data.msg }];
+      dispatch(stockError({ errors }));
+    }
+  }
+}
+
 export const deleteStock = (postId) => {
   return async (dispatch) => {
     try {

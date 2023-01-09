@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { deleteStock } from "../../store/actions/stock";
+import { deleteStock, sendStockAlert } from "../../store/actions/stock";
+import getPrice from "../../utils/stockPrice";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -17,6 +18,19 @@ const ActiveStock = (props) => {
     setRaise((prevState) => !prevState);
   };
 
+  const checkPrice = useCallback(async () => {
+    let { id, currPrice, stockSymbol, targetPrice } = props;
+    const newPrice = await getPrice(stockSymbol);
+    if (newPrice >= targetPrice) {
+      dispatch(sendStockAlert({ currPrice, stockSymbol, targetPrice }, id));
+    }
+  }, [dispatch, props]);
+
+  useEffect(() => {
+    const interval = setInterval(checkPrice, 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [dispatch, checkPrice]);
+
   return (
     <Card
       className="activeStock__card"
@@ -29,7 +43,6 @@ const ActiveStock = (props) => {
         <CancelIcon
           className="activeStock__cardExitBtn"
           onClick={() => {
-            console.log(props.id)
             dispatch(deleteStock(props.id));
           }}
         />
@@ -41,7 +54,7 @@ const ActiveStock = (props) => {
           variant="h5"
           component="div"
         >
-          Current Price: {props.currPrice}
+          Initial Price: {props.currPrice}
         </Typography>
         <Typography className="activeStock__percentageText" variant="subtitle1">
           Target Price: {props.targetPrice}
